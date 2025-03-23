@@ -48,14 +48,10 @@ export class AppController {
             );
           },
         }),
-        fileFilter: (_req, file, cb) => {
+        fileFilter: (req, file, cb) => {
           if (file.mimetype !== 'video/mp4' && file.mimetype !== 'image/jpeg') {
-            return cb(
-              new BadRequestException(
-                'Invalid file type. Only video/mp4 and image/jpeg are supported.',
-              ),
-              false,
-            );
+            req.fileValidationError = 'UNSUPPORTED_FILE_TYPE';
+            return cb(null, false);
           }
           return cb(null, true);
         },
@@ -63,7 +59,7 @@ export class AppController {
     ),
   )
   async uploadVideo(
-    @Req() _req: Request,
+    @Req() req: Request & { fileValidationError?: string },
     @Body()
     contentData: {
       title: string;
@@ -74,6 +70,15 @@ export class AppController {
   ): Promise<any> {
     const videoFile = files.video?.[0];
     const thumbnailFile = files.thumbnail?.[0];
+
+    if (
+      req.fileValidationError &&
+      req.fileValidationError === 'UNSUPPORTED_FILE_TYPE'
+    ) {
+      throw new BadRequestException(
+        'Invalid file type. Only video/mp4 and image/jpeg are supported.',
+      );
+    }
 
     if (!videoFile || !thumbnailFile) {
       throw new BadRequestException(
