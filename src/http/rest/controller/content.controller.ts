@@ -21,6 +21,8 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import { diskStorage } from 'multer';
 import path, { extname } from 'path';
+import { CreateVideoResponseDto } from '../dto/response/create-video-response.dto';
+import { RestResponseInterceptor } from '../interceptor/rest-response.interceptor';
 
 @Controller('content')
 export class ContentController {
@@ -62,6 +64,7 @@ export class ContentController {
       },
     ),
   )
+  @UseInterceptors(new RestResponseInterceptor(CreateVideoResponseDto))
   async uploadVideo(
     @Req() _req: Request,
     @Body()
@@ -71,7 +74,7 @@ export class ContentController {
     },
     @UploadedFiles()
     files: { video?: Express.Multer.File[]; thumbnail?: Express.Multer.File[] },
-  ): Promise<any> {
+  ): Promise<CreateVideoResponseDto> {
     const videoFile = files.video?.[0];
     const thumbnailFile = files.thumbnail?.[0];
 
