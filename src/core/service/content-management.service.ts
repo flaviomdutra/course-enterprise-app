@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@src/prisma.service';
+import { PrismaService } from '@src/persistence/prisma/prisma.service';
 import { randomUUID } from 'crypto';
 
 export interface CreateContentData {

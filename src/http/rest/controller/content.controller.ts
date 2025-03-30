@@ -14,8 +14,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { ContentManagementService } from '@src/core/content-management.service';
-import { MediaPlayerService } from '@src/core/media-player.service';
+import { ContentManagementService } from '@src/core/service/content-management.service';
+import { MediaPlayerService } from '@src/core/service/media-player.service';
 import { randomUUID } from 'crypto';
 import { Request, Response } from 'express';
 import fs from 'fs';
