@@ -20,7 +20,7 @@ export class TypeOrmPersistenceModule {
           useFactory: async (...args: any[]) => {
             const configService: ConfigService = args.find(
               (arg) => arg instanceof ConfigService,
-            );
+            )!;
 
             return {
               type: 'postgres',
