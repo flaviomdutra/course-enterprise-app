@@ -18,9 +18,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest.e2e.ts --runInBand",
-    "db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate database/typeorm/migrations/migration  -d ./database/typeorm/migration.datasource.ts",
-    "db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./database/typeorm/migration.datasource.ts",
-    "db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d ./database/typeorm/migration.datasource.ts"
+    "content:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate database/content/typeorm/migrations/migration  -d ./database/content/typeorm/migration.datasource.ts",
+    "content:db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./database/content/typeorm/migration.datasource.ts",
+    "content:db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d ./database/content/typeorm/migration.datasource.ts",
+    "identity:db:generate": "prisma migrate dev",
+    "identity:db:migrate": "prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -81,5 +83,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "prisma": {
+    "schema": "database/identity/prisma/schema.prisma"
   }
 }
