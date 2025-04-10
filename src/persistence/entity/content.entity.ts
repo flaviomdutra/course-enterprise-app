@@ -1,4 +1,4 @@
-import { ContentType } from '@src/core/entity/content.entity';
+import { ContentType } from '@src/core/enum/content-type.enum';
 import { DefaultEntity } from '@src/infra/module/typeorm/entity/default.entity';
 import { Column, Entity, OneToOne } from 'typeorm';
 import { Movie } from './movie.entity';
