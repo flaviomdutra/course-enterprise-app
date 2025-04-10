@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '../config/config.module';
-import { ConfigService } from '../config/service/config.service';
+import { ConfigModule } from '../../../../shared/module/config/config.module';
+import { ConfigService } from '../../../../shared/module/config/service/config.service';
 import { DefaultEntity } from './entity/default.entity';
 import { TypeOrmMigrationService } from './service/typeorm-migration.service';
 
@@ -17,11 +17,7 @@ export class TypeOrmPersistenceModule {
         TypeOrmModule.forRootAsync({
           imports: [ConfigModule.forRoot()],
           inject: [ConfigService],
-          useFactory: async (...args: any[]) => {
-            const configService: ConfigService = args.find(
-              (arg) => arg instanceof ConfigService,
-            )!;
-
+          useFactory: async (configService) => {
             return {
               type: 'postgres',
               logging: false,
