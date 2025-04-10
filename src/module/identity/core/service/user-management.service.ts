@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import { UserModel } from '@identityModule/core/model/user.model';
 import { UserRepository } from '@identityModule/persistence/repository/user.repository';
+import { Injectable } from '@nestjs/common';
+import { DomainException } from '@sharedLibs/core/exception/domain.exception';
 import bcrypt from 'bcrypt';
-import { DomainException } from '@sharedLibs/core/exeption/domain.exception';
 
 export interface CreateUserDto {
   email: string;
