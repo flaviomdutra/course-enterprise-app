@@ -1,12 +1,12 @@
-import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
-import { MovieRepository } from '@contentModule/persistence/repository/movie.repository';
-import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@src/app.module';
 
+import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
+import { MovieRepository } from '@contentModule/persistence/repository/movie.repository';
+import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import fs from 'fs';
-import nock from 'nock';
+import nock, { cleanAll } from 'nock';
 import request from 'supertest';
 
 describe('VideoUploadController (e2e)', () => {
@@ -39,7 +39,7 @@ describe('VideoUploadController (e2e)', () => {
     await videoRepository.deleteAll();
     await movieRepository.deleteAll();
     await contentRepository.deleteAll();
-    nock.cleanAll();
+    cleanAll();
   });
 
   afterAll(async () => {

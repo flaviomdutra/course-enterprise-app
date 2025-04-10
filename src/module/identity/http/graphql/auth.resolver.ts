@@ -1,6 +1,6 @@
+import { AuthService } from '@identityModule/core/service/authentication.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthService } from '@identityModule/core/service/authentication.service';
 import { AuthToken } from './type/auth-token.type';
 import { SignInInput } from './type/sign-in-input.type';
 
@@ -15,7 +15,7 @@ export class AuthResolver {
     try {
       const token = await this.authService.signIn(email, password);
       return token;
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException('Cannot authorize user');
     }
   }

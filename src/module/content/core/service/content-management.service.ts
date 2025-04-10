@@ -7,7 +7,6 @@ import { ContentRepository } from '@contentModule/persistence/repository/content
 import { Injectable } from '@nestjs/common';
 import { ContentType } from '../enum/content-type.enum';
 
-
 export interface CreateMovieData {
   title: string;
   description: string;
@@ -27,7 +26,7 @@ export class ContentManagementService {
     const externalRating = await this.externalMovieRatingClient.getRating(
       createMovieData.title,
     );
-    
+
     const contentEntity = new Content({
       title: createMovieData.title,
       description: createMovieData.description,
