@@ -1,31 +1,66 @@
-import { UserModel } from '@identityModule/core/model/user.model';
+import { IdentityModule } from '@identityModule/identity.module';
 import { UserRepository } from '@identityModule/persistence/repository/user.repository';
-import { Injectable } from '@nestjs/common';
-import { hash } from 'bcrypt';
+import { INestApplication } from '@nestjs/common';
+import { TestingModule } from '@nestjs/testing';
+import { createNestApp } from '@testInfra/test-e2e.setup';
+import request from 'supertest';
 
-export interface CreateUserDto {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
+describe('UserResolver (e2e)', () => {
+  let app: INestApplication;
+  let userRepository: UserRepository;
+  let module: TestingModule;
 
-//TODO move to a configuration
-export const PASSWORD_HASH_SALT = 10;
+  beforeAll(async () => {
+    const nestTestSetup = await createNestApp([IdentityModule]);
+    app = nestTestSetup.app;
+    module = nestTestSetup.module;
 
-@Injectable()
-export class UserManagementService {
-  constructor(private readonly userRepository: UserRepository) {}
-  async create(user: CreateUserDto) {
-    const newUser = UserModel.create({
-      ...user,
-      password: await hash(user.password, PASSWORD_HASH_SALT),
+    userRepository = module.get<UserRepository>(UserRepository);
+  });
+
+  beforeEach(async () => {
+    await userRepository.clear();
+  });
+
+  afterAll(async () => {
+    await userRepository.clear();
+    await module.close();
+  });
+
+  describe('Identity - createUser mutation', () => {
+    it('creates a new user', async () => {
+      const createUserInput = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'johndoe@example.com',
+        password: 'password123',
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            mutation {
+              createUser(CreateUserInput: {
+                firstName: "${createUserInput.firstName}",
+                lastName: "${createUserInput.lastName}",
+                email: "${createUserInput.email}",
+                password: "${createUserInput.password}"
+              }) {
+                id
+                firstName
+                lastName
+                email
+              }
+            }
+          `,
+        });
+      const { id, firstName, lastName, email } = response.body.data.createUser;
+
+      expect(id).toBeDefined();
+      expect(firstName).toBe(createUserInput.firstName);
+      expect(lastName).toBe(createUserInput.lastName);
+      expect(email).toBe(createUserInput.email);
     });
-    await this.userRepository.save(newUser);
-    return newUser;
-  }
-
-  async getUserById(id: string) {
-    return this.userRepository.findOneBy({ id });
-  }
-}
+  });
+});
