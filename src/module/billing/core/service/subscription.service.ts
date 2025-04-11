@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { NotFoundDomainException } from '@sharedLibs/core/exeption/not-found-domain.exception';
 import {
   SubscriptionModel,
   SubscriptionStatus,
 } from '@billingModule/core/model/subscription.model';
+import { Injectable } from '@nestjs/common';
+import { NotFoundDomainException } from '@sharedLibs/core/exception/not-found-domain.exception';
 
 import { PlanRepository } from '@billingModule/persistence/repository/plan.repository';
 import { SubscriptionRepository } from '@billingModule/persistence/repository/subscription.repository';
