@@ -7,6 +7,7 @@ import { Thumbnail } from './entity/thumbnail.entity';
 import { TvShow } from './entity/tv-show.entity';
 import { Video } from './entity/video.entity';
 import { ContentRepository } from './repository/content.repository';
+import { EpisodeRepository } from './repository/episode.repository';
 import { MovieRepository } from './repository/movie.repository';
 import { VideoRepository } from './repository/video.repository';
 
@@ -22,8 +23,18 @@ export class PersistenceModule {
           entities: [Content, Movie, Thumbnail, Video, TvShow, Episode],
         }),
       ],
-      providers: [ContentRepository, MovieRepository, VideoRepository],
-      exports: [ContentRepository, MovieRepository, VideoRepository],
+      providers: [
+        ContentRepository,
+        MovieRepository,
+        VideoRepository,
+        EpisodeRepository,
+      ],
+      exports: [
+        ContentRepository,
+        MovieRepository,
+        VideoRepository,
+        EpisodeRepository,
+      ],
     };
   }
 }
