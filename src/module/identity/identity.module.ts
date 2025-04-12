@@ -1,4 +1,3 @@
-import { BillingPublicApiProvider } from '@billingModule/integration/provider/public-api.provider';
 import {
   AuthService,
   jwtConstants,
@@ -7,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtModule } from '@nestjs/jwt';
+import { BillingSubscriptionHttpClient } from '@sharedModules/integration/client/billing-subscription-http.client';
 import { BillingSubscriptionStatusApi } from '@sharedModules/integration/interface/billing-integration.interface';
 import { DomainModuleIntegrationModule } from '@sharedModules/integration/interface/domain-module-integration.module';
 import { PersistenceModule } from '@sharedModules/persistence/prisma/persistence.module';
@@ -32,7 +32,7 @@ import { UserRepository } from './persistence/repository/user.repository';
   providers: [
     {
       provide: BillingSubscriptionStatusApi,
-      useExisting: BillingPublicApiProvider,
+      useExisting: BillingSubscriptionHttpClient,
     },
     AuthService,
     AuthResolver,
