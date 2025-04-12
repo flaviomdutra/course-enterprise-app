@@ -4,6 +4,7 @@ import { Content } from '@contentModule/persistence/entity/content.entity';
 import { Injectable } from '@nestjs/common';
 import { DefaultTypeOrmRepository } from '@sharedModules/persistence/typeorm/repository/default-typeorm.repository';
 import { EntityManager } from 'typeorm';
+import { Episode } from '../entity/episode.entity';
 
 @Injectable()
 export class ContentRepository extends DefaultTypeOrmRepository<Content> {
@@ -34,6 +35,7 @@ export class ContentRepository extends DefaultTypeOrmRepository<Content> {
   }
 
   async saveTvShow(entity: TvShowContentModel): Promise<TvShowContentModel> {
+    const episodes = entity.tvShow.episodes;
     const content = new Content({
       id: entity.id,
       title: entity.title,
@@ -42,7 +44,14 @@ export class ContentRepository extends DefaultTypeOrmRepository<Content> {
       ageRecommendation: entity.ageRecommendation,
       tvShow: entity.tvShow,
     });
-    await super.save(content);
+
+    await this.entityManager.transaction(async (transactionalEntityManager) => {
+      await transactionalEntityManager.getRepository(Content).save(content);
+      // saves the relations from the ManyToOne relationship side to avoid replacement
+      if (Array.isArray(episodes) && episodes.length > 0) {
+        await transactionalEntityManager.getRepository(Episode).save(episodes);
+      }
+    });
 
     return new TvShowContentModel({
       id: content.id,

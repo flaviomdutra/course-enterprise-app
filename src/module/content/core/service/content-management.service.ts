@@ -158,17 +158,10 @@ export class ContentManagementService {
 
     content.ageRecommendation = ageRecommendation;
 
-    return await this.transactionManagerService.executeWithinTransaction(
-      async () => {
-        await this.transactionManagerService.transactionalContentRepository.saveTvShow(
-          content,
-        );
-        await this.transactionManagerService.transactionalEpisodeRepository.save(
-          episode,
-        );
+    content.tvShow.episodes = [episode];
 
-        return episode;
-      },
-    );
+    await this.contentRepository.saveTvShow(content);
+
+    return episode;
   }
 }
