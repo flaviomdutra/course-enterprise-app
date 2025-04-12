@@ -18,6 +18,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Transactional } from 'typeorm-transactional';
 
 export interface CreateMovieData {
   title: string;
@@ -88,6 +89,7 @@ export class ContentManagementService {
     return await this.contentRepository.saveTvShow(content);
   }
 
+  @Transactional()
   async createEpisode(
     contentId: string,
     episodeData: CreateEpisodeRequestDto & {
