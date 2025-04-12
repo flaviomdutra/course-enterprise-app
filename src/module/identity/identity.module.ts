@@ -1,3 +1,5 @@
+import { BillingModule } from '@billingModule/billing.module';
+import { BillingPublicApiProvider } from '@billingModule/integration/provider/public-api.provider';
 import {
   AuthService,
   jwtConstants,
@@ -27,11 +29,12 @@ import { UserRepository } from './persistence/repository/user.repository';
       driver: ApolloDriver,
     }),
     DomainModuleIntegrationModule,
+    BillingModule,
   ],
   providers: [
     {
       provide: BillingSubscriptionStatusApi,
-      useExisting: BillingSubscriptionRepository,
+      useExisting: BillingPublicApiProvider,
     },
     AuthService,
     AuthResolver,
