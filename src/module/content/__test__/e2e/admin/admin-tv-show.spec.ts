@@ -1,9 +1,9 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
-
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
+import fs from 'fs';
 import request from 'supertest';
 
 describe('AdminTvShowController (e2e)', () => {
@@ -34,6 +34,7 @@ describe('AdminTvShowController (e2e)', () => {
     //TODO move it to be shared
     await app.close();
     await module.close();
+    fs.rmSync('./uploads', { recursive: true, force: true });
   });
 
   describe('/admin/tv-show (POST)', () => {
