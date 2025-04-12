@@ -1,8 +1,8 @@
 import { MovieContentModel } from '@contentModule/core/model/movie-content.model';
 import { TvShowContentModel } from '@contentModule/core/model/tv-show-content.model';
-import { DefaultTypeOrmRepository } from '@contentModule/infra/module/typeorm/repository/default-typeorm.repository';
 import { Content } from '@contentModule/persistence/entity/content.entity';
 import { Inject, Injectable } from '@nestjs/common';
+import { DefaultTypeOrmRepository } from '@sharedModules/persistence/typeorm/repository/default-typeorm.repository';
 import { DataSource } from 'typeorm';
 
 @Injectable()
