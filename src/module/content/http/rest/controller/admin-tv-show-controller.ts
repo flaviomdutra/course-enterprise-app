@@ -1,6 +1,4 @@
 import { ContentManagementService } from '@contentModule/core/service/content-management.service';
-import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
-import { CreateTvShowRequestDto } from '@contentModule/http/rest/dto/request/create-tv-show-request.dto';
 import { CreateEpisodeResponseDto } from '@contentModule/http/rest/dto/response/create-episode-response.dto';
 import { CreateTvShowResponseDto } from '@contentModule/http/rest/dto/response/create-tv-show-response.dto';
 import {
@@ -17,11 +15,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-
 import { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'node:crypto';
 import { extname } from 'node:path';
+import { CreateEpisodeRequestDto } from '../dto/request/create-episode-request.dto';
+import { CreateTvShowRequestDto } from '../dto/request/create-tv-show-request.dto';
 
 @Controller('admin/tv-show')
 export class AdminTvShowController {

@@ -15,13 +15,16 @@ export class Content extends DefaultEntity<Content> {
   @Column('text')
   description: string;
 
+  @Column({ type: 'int', nullable: true })
+  ageRecommendation: number | null;
+
   @OneToOne(() => Movie, (movie) => movie.content, {
     cascade: true,
   })
-  movie: Movie;
+  movie?: Movie;
 
   @OneToOne(() => TvShow, (tvShow) => tvShow.content, {
     cascade: true,
   })
-  tvShow: TvShow | null;
+  tvShow?: TvShow;
 }

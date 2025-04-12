@@ -1,6 +1,6 @@
+import { VideoNotFoundException } from '@contentModule/core/exception/video-not-found.exception';
 import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import { Injectable } from '@nestjs/common';
-import { VideoNotFoundException } from '../exception/video-not-found.exception';
 
 @Injectable()
 export class MediaPlayerService {

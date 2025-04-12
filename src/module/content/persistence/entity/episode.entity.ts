@@ -4,7 +4,7 @@ import { Thumbnail } from './thumbnail.entity';
 import { TvShow } from './tv-show.entity';
 import { Video } from './video.entity';
 
-@Entity('episode')
+@Entity('Episode')
 export class Episode extends DefaultEntity<Episode> {
   @Column({ type: 'varchar', length: 255, nullable: false })
   title: string;
@@ -31,5 +31,5 @@ export class Episode extends DefaultEntity<Episode> {
   @OneToOne(() => Video, (video) => video.episode, {
     cascade: true,
   })
-  video: Video | null;
+  video: Video;
 }
