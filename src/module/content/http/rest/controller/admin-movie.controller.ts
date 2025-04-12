@@ -1,5 +1,7 @@
 import { ContentManagementService } from '@contentModule/core/service/content-management.service';
 import { MediaPlayerService } from '@contentModule/core/service/media-player.service';
+import { CreateVideoResponseDto } from '@contentModule/http/rest/dto/response/create-video-response.dto';
+import { RestResponseInterceptor } from '@contentModule/http/rest/interceptor/rest-response.interceptor';
 import {
   BadRequestException,
   Body,
@@ -16,17 +18,15 @@ import { randomUUID } from 'crypto';
 import { Request } from 'express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { CreateVideoResponseDto } from '../dto/response/create-video-response.dto';
-import { RestResponseInterceptor } from '../interceptor/rest-response.interceptor';
 
-@Controller('content')
-export class VideoUploadController {
+@Controller('admin')
+export class AdminMovieController {
   constructor(
     private readonly contentManagementService: ContentManagementService,
     private readonly mediaPlayerService: MediaPlayerService,
   ) {}
 
-  @Post('video')
+  @Post('movie')
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(
     FileFieldsInterceptor(
@@ -60,7 +60,7 @@ export class VideoUploadController {
     ),
   )
   @UseInterceptors(new RestResponseInterceptor(CreateVideoResponseDto))
-  async uploadVideo(
+  async uploadMovie(
     @Req() _req: Request,
     @Body()
     contentData: {

@@ -6,6 +6,8 @@ import { ContentModule } from '@contentModule/content.module';
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
 import { MovieRepository } from '@contentModule/persistence/repository/movie.repository';
 import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
+import { Tables } from '@testInfra/enum/table.enum';
+import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
 import fs from 'fs';
 import nock, { cleanAll } from 'nock';
@@ -39,9 +41,9 @@ describe('ContentController (e2e)', () => {
   });
 
   afterEach(async () => {
-    await videoRepository.deleteAll();
-    await movieRepository.deleteAll();
-    await contentRepository.deleteAll();
+    await testDbClient(Tables.Video).del();
+    await testDbClient(Tables.Movie).del();
+    await testDbClient(Tables.Content).del();
     cleanAll();
   });
 

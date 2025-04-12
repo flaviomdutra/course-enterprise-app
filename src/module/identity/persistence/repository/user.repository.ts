@@ -1,8 +1,8 @@
+import { UserModel } from '@identityModule/core/model/user.model';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DefaultPrismaRepository } from '@sharedModules/persistence/prisma/default.prisma.repository';
 import { PrismaService } from '@sharedModules/persistence/prisma/prisma.service';
-import { UserModel } from '@identityModule/core/model/user.model';
 
 type QueryableFields = Prisma.$UserPayload['scalars'];
 
@@ -36,14 +36,6 @@ export class UserRepository extends DefaultPrismaRepository {
       }
 
       return UserModel.createFrom(user);
-    } catch (error) {
-      this.handleAndThrowError(error);
-    }
-  }
-
-  async clear(): Promise<{ count: number }> {
-    try {
-      return await this.model.deleteMany();
     } catch (error) {
       this.handleAndThrowError(error);
     }

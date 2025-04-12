@@ -1,29 +1,27 @@
 import { IdentityModule } from '@identityModule/identity.module';
-import { UserRepository } from '@identityModule/persistence/repository/user.repository';
 import { INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
+import { Tables } from '@testInfra/enum/table.enum';
+import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
 import request from 'supertest';
 
 describe('UserResolver (e2e)', () => {
   let app: INestApplication;
-  let userRepository: UserRepository;
   let module: TestingModule;
 
   beforeAll(async () => {
     const nestTestSetup = await createNestApp([IdentityModule]);
     app = nestTestSetup.app;
     module = nestTestSetup.module;
-
-    userRepository = module.get<UserRepository>(UserRepository);
   });
 
   beforeEach(async () => {
-    await userRepository.clear();
+    await testDbClient(Tables.User).del();
   });
 
   afterAll(async () => {
-    await userRepository.clear();
+    await testDbClient(Tables.User).del();
     await module.close();
   });
 

@@ -1,9 +1,9 @@
-import { ContentModule } from '@contentModule/content.module';
-import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
-import { MovieRepository } from '@contentModule/persistence/repository/movie.repository';
-import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
+
+import { ContentModule } from '@contentModule/content.module';
+import { Tables } from '@testInfra/enum/table.enum';
+import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
 import fs from 'fs';
 import nock, { cleanAll } from 'nock';
@@ -12,18 +12,11 @@ import request from 'supertest';
 describe('VideoUploadController (e2e)', () => {
   let module: TestingModule;
   let app: INestApplication;
-  let videoRepository: VideoRepository;
-  let contentRepository: ContentRepository;
-  let movieRepository: MovieRepository;
 
   beforeAll(async () => {
     const nestTestSetup = await createNestApp([ContentModule]);
     app = nestTestSetup.app;
     module = nestTestSetup.module;
-
-    videoRepository = module.get<VideoRepository>(VideoRepository);
-    contentRepository = module.get<ContentRepository>(ContentRepository);
-    movieRepository = module.get<MovieRepository>(MovieRepository);
   });
 
   beforeEach(async () => {
@@ -33,9 +26,10 @@ describe('VideoUploadController (e2e)', () => {
   });
 
   afterEach(async () => {
-    await videoRepository.deleteAll();
-    await movieRepository.deleteAll();
-    await contentRepository.deleteAll();
+    await testDbClient(Tables.Video).del();
+    await testDbClient(Tables.Movie).del();
+    await testDbClient(Tables.Thumbnail).del();
+    await testDbClient(Tables.Content).del();
     cleanAll();
   });
 
@@ -97,7 +91,7 @@ describe('VideoUploadController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/content/video')
+        .post('/admin/movie')
         .attach('video', './test/fixtures/sample.mp4')
         .attach('thumbnail', './test/fixtures/sample.jpg')
         .field('title', video.title)
@@ -123,7 +117,7 @@ describe('VideoUploadController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/content/video')
+        .post('/admin/movie')
         .attach('video', './test/fixtures/sample.mp4')
         .field('title', video.title)
         .field('description', video.description)
@@ -148,7 +142,7 @@ describe('VideoUploadController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/content/video')
+        .post('/admin/movie')
         .attach('video', './test/fixtures/sample.mp3')
         .attach('thumbnail', './test/fixtures/sample.jpg')
         .field('title', video.title)
