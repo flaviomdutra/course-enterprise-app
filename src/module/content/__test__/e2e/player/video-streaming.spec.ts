@@ -1,11 +1,7 @@
-import { ContentManagementService } from '@contentModule/core/service/content-management.service';
+import { CreateMovieUseCase } from '@contentModule/application/use-case/create-movie.use-case';
+import { ContentModule } from '@contentModule/content.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
-
-import { ContentModule } from '@contentModule/content.module';
-import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
-import { MovieRepository } from '@contentModule/persistence/repository/movie.repository';
-import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
@@ -16,22 +12,14 @@ import request from 'supertest';
 describe('ContentController (e2e)', () => {
   let module: TestingModule;
   let app: INestApplication;
-  let videoRepository: VideoRepository;
-  let movieRepository: MovieRepository;
-  let contentRepository: ContentRepository;
-  let contentManagementService: ContentManagementService;
+  let createMovieUseCase: CreateMovieUseCase;
 
   beforeAll(async () => {
     const nestTestSetup = await createNestApp([ContentModule]);
     app = nestTestSetup.app;
     module = nestTestSetup.module;
 
-    contentManagementService = module.get<ContentManagementService>(
-      ContentManagementService,
-    );
-    videoRepository = module.get<VideoRepository>(VideoRepository);
-    movieRepository = module.get<MovieRepository>(MovieRepository);
-    contentRepository = module.get<ContentRepository>(ContentRepository);
+    createMovieUseCase = module.get<CreateMovieUseCase>(CreateMovieUseCase);
   });
 
   beforeEach(async () => {
@@ -92,10 +80,10 @@ describe('ContentController (e2e)', () => {
             },
           ],
         });
-      const createdMovie = await contentManagementService.createMovie({
+      const createdMovie = await createMovieUseCase.execute({
         title: 'Test Video',
         description: 'This is a test video',
-        url: './test/fixtures/sample.mp4',
+        videoUrl: './test/fixtures/sample.mp4',
         thumbnailUrl: './test/fixtures/sample.jpg',
         sizeInKb: 1430145,
       });

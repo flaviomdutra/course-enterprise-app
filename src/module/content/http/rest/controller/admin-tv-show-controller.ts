@@ -1,4 +1,7 @@
-import { ContentManagementService } from '@contentModule/core/service/content-management.service';
+import { CreateTvShowEpisodeUseCase } from '@contentModule/application/use-case/create-tv-show-episode.use-case';
+import { CreateTvShowUseCase } from '@contentModule/application/use-case/create-tv-show.use-case';
+import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
+import { CreateTvShowRequestDto } from '@contentModule/http/rest/dto/request/create-tv-show-request.dto';
 import { CreateEpisodeResponseDto } from '@contentModule/http/rest/dto/response/create-episode-response.dto';
 import { CreateTvShowResponseDto } from '@contentModule/http/rest/dto/response/create-tv-show-response.dto';
 import {
@@ -19,13 +22,12 @@ import { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'node:crypto';
 import { extname } from 'node:path';
-import { CreateEpisodeRequestDto } from '../dto/request/create-episode-request.dto';
-import { CreateTvShowRequestDto } from '../dto/request/create-tv-show-request.dto';
 
 @Controller('admin/tv-show')
 export class AdminTvShowController {
   constructor(
-    private readonly contentManagementService: ContentManagementService,
+    private readonly creatTvShowUseCase: CreateTvShowUseCase,
+    private readonly createEpisodeUseCase: CreateTvShowEpisodeUseCase,
   ) {}
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -58,7 +60,7 @@ export class AdminTvShowController {
     )
     thumbnail: Express.Multer.File,
   ): Promise<CreateTvShowResponseDto> {
-    const content = await this.contentManagementService.createTvShow({
+    const content = await this.creatTvShowUseCase.execute({
       title: contentData.title,
       description: contentData.description,
       thumbnailUrl: thumbnail.path,
@@ -107,14 +109,12 @@ export class AdminTvShowController {
       throw new BadRequestException('Video file is required.');
     }
 
-    const createdEpisode = await this.contentManagementService.createEpisode(
+    const createdEpisode = await this.createEpisodeUseCase.execute({
+      ...episodeData,
       contentId,
-      {
-        ...episodeData,
-        videoUrl: video.path,
-        videoSizeInKb: video.size,
-      },
-    );
+      videoUrl: video.path,
+      videoSizeInKb: video.size,
+    });
 
     return {
       id: createdEpisode.id,

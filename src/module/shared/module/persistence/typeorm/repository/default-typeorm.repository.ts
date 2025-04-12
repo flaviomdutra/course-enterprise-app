@@ -3,7 +3,7 @@ import {
   EntityTarget,
   FindOneOptions,
   FindOptionsWhere,
-  Repository
+  Repository,
 } from 'typeorm';
 import { DefaultEntity } from '../entity/default.entity';
 

@@ -35,7 +35,7 @@ export class AuthService {
         `User subscription is not active: ${email}`,
       );
     }
-    
+
     //TODO add more fields to the JWT
     const payload = { sub: user.id };
     return {

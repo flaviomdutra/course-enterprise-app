@@ -29,7 +29,7 @@ import { UserRepository } from './persistence/repository/user.repository';
       driver: ApolloDriver,
     }),
     DomainModuleIntegrationModule,
-    BillingModule
+    BillingModule,
   ],
   providers: [
     {

@@ -1,7 +1,11 @@
+import { CreateMovieUseCase } from '@contentModule/application/use-case/create-movie.use-case';
+import { CreateTvShowEpisodeUseCase } from '@contentModule/application/use-case/create-tv-show-episode.use-case';
+import { CreateTvShowUseCase } from '@contentModule/application/use-case/create-tv-show.use-case';
+import { GetStreamingURLUseCase } from '@contentModule/application/use-case/get-streaming-url.use-case';
 import { AgeRecommendationService } from '@contentModule/core/service/age-recommendation.service';
-import { ContentManagementService } from '@contentModule/core/service/content-management.service';
-import { MediaPlayerService } from '@contentModule/core/service/media-player.service';
+import { EpisodeLifecycleService } from '@contentModule/core/service/episode-lifecycle.service';
 import { VideoMetadataService } from '@contentModule/core/service/video-metadata.service';
+import { VideoProcessorService } from '@contentModule/core/service/video-processor.service';
 import { VideoProfanityFilterService } from '@contentModule/core/service/video-profanity-filter.service';
 import { ExternalMovieClient } from '@contentModule/http/rest/client/external-movie-rating/external-movie-rating.client';
 import { AdminMovieController } from '@contentModule/http/rest/controller/admin-movie.controller';
@@ -26,14 +30,18 @@ import { HttpClientModule } from '@sharedModules/http-client/http-client.module'
     AdminTvShowController,
   ],
   providers: [
-    ContentManagementService,
-    MediaPlayerService,
     ContentRepository,
     VideoRepository,
     ExternalMovieClient,
     AgeRecommendationService,
     VideoMetadataService,
     VideoProfanityFilterService,
+    VideoProcessorService,
+    EpisodeLifecycleService,
+    CreateMovieUseCase,
+    CreateTvShowEpisodeUseCase,
+    CreateTvShowUseCase,
+    GetStreamingURLUseCase,
   ],
 })
 export class ContentModule {}
