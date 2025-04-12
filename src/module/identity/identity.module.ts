@@ -1,4 +1,3 @@
-import { BillingModule } from '@billingModule/billing.module';
 import { BillingPublicApiProvider } from '@billingModule/integration/provider/public-api.provider';
 import {
   AuthService,
@@ -29,7 +28,6 @@ import { UserRepository } from './persistence/repository/user.repository';
       driver: ApolloDriver,
     }),
     DomainModuleIntegrationModule,
-    BillingModule,
   ],
   providers: [
     {
