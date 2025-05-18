@@ -17,6 +17,10 @@ import { VideoRepository } from '@contentModule/persistence/repository/video.rep
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@sharedModules/config/config.module';
 import { HttpClientModule } from '@sharedModules/http-client/http-client.module';
+import { VideoAgeRecommendationAdapter } from './core/adapter/video-recommendation.adapter.interface';
+import { VideoSummaryGenerationAdapter } from './core/adapter/video-summary-generator.adapter.interface';
+import { VideoTranscriptGenerationAdapter } from './core/adapter/video-transcript-generator.adapter.interface';
+import { GeminiTextExtractorClient } from './http/rest/client/gemini/gemini-text-extractor.client';
 
 @Module({
   imports: [
@@ -30,6 +34,18 @@ import { HttpClientModule } from '@sharedModules/http-client/http-client.module'
     AdminTvShowController,
   ],
   providers: [
+    {
+      provide: VideoSummaryGenerationAdapter,
+      useClass: GeminiTextExtractorClient,
+    },
+    {
+      provide: VideoTranscriptGenerationAdapter,
+      useClass: GeminiTextExtractorClient,
+    },
+    {
+      provide: VideoAgeRecommendationAdapter,
+      useClass: GeminiTextExtractorClient,
+    },
     ContentRepository,
     VideoRepository,
     ExternalMovieClient,
