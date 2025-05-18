@@ -87,7 +87,7 @@ describe('VideoUploadController (e2e)', () => {
         videoUrl: 'uploads/test.mp4',
         thumbnailUrl: 'uploads/test.jpg',
         sizeInKb: 1430145,
-        duration: 100,
+        duration: null,
       };
 
       await request(app.getHttpServer())
@@ -113,7 +113,7 @@ describe('VideoUploadController (e2e)', () => {
         videoUrl: 'uploads/test.mp4',
         thumbnailUrl: 'uploads/test.jpg',
         sizeInKb: 1430145,
-        duration: 100,
+        duration: null,
       };
 
       await request(app.getHttpServer())
@@ -138,7 +138,7 @@ describe('VideoUploadController (e2e)', () => {
         videoUrl: 'uploads/test.mp4',
         thumbnailUrl: 'uploads/test.jpg',
         sizeInKb: 100,
-        duration: 100,
+        duration: null,
       };
 
       await request(app.getHttpServer())

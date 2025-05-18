@@ -1,5 +1,7 @@
+import { ContentModule } from '@contentModule/content.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
+
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
@@ -11,7 +13,7 @@ describe('AdminTvShowController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    const nestTestSetup = await createNestApp();
+    const nestTestSetup = await createNestApp([ContentModule]);
     app = nestTestSetup.app;
     module = nestTestSetup.module;
   });
@@ -82,7 +84,7 @@ describe('AdminTvShowController (e2e)', () => {
         season: 1,
         number: 1,
         sizeInKb: 1430145,
-        duration: 100,
+        duration: null,
       };
 
       await request(app.getHttpServer())
@@ -125,7 +127,7 @@ describe('AdminTvShowController (e2e)', () => {
         season: 1,
         number: 1,
         sizeInKb: 1430145,
-        duration: 100,
+        duration: null,
       };
 
       /**

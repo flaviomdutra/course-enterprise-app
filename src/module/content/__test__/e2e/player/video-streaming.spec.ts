@@ -1,7 +1,9 @@
-import { ContentModule } from '@contentModule/content.module';
-import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
+
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
+
+import { ContentModule } from '@contentModule/content.module';
+import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
