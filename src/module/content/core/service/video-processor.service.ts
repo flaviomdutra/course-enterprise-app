@@ -1,3 +1,4 @@
+import { VideoMetadata } from '@contentModule/persistence/entity/video-metadata.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { Video } from '@src/module/content/persistence/entity/video.entity';
 import { VideoAgeRecommendationAdapter } from '../adapter/video-recommendation.adapter.interface';
@@ -15,7 +16,7 @@ export class VideoProcessorService {
     private readonly videoAgeRecommendationAdapter: VideoAgeRecommendationAdapter,
   ) {}
 
-  async processMetadataAndSecurity(video: Video) {
+  async processMetadataAndModeration(video: Video) {
     const summary = await this.videoSummaryGenerator.generateSummary(video.url);
     const transcript = await this.videoTranscriptGenerator.generateTranscript(
       video.url,
