@@ -1,5 +1,5 @@
-import { CreateMovieUseCase } from '@contentModule/application/use-case/create-movie.use-case';
 import { ContentModule } from '@contentModule/content.module';
+import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
 import { Tables } from '@testInfra/enum/table.enum';

@@ -22,7 +22,6 @@ export class CreateMovieUseCase {
   ) {}
 
   async execute(video: {
-    //TODO add userId
     title: string;
     description: string;
     videoUrl: string;

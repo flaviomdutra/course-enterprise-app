@@ -1,11 +1,14 @@
 import { AgeRecommendationService } from '@contentModule/core/service/age-recommendation.service';
+import { ContentDistributionService } from '@contentModule/core/service/content-distribution.service';
 import { EpisodeLifecycleService } from '@contentModule/core/service/episode-lifecycle.service';
 import { VideoProcessorService } from '@contentModule/core/service/video-processor.service';
 import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
 import { Episode } from '@contentModule/persistence/entity/episode.entity';
 import { Video } from '@contentModule/persistence/entity/video.entity';
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
+import { EpisodeRepository } from '@contentModule/persistence/repository/episode.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { runInTransaction } from 'typeorm-transactional';
 
 @Injectable()
 export class CreateTvShowEpisodeUseCase {
@@ -14,6 +17,8 @@ export class CreateTvShowEpisodeUseCase {
     private readonly ageRecommendationService: AgeRecommendationService,
     private readonly episodeLifecycleService: EpisodeLifecycleService,
     private readonly videoProcessorService: VideoProcessorService,
+    private readonly episodeRepository: EpisodeRepository,
+    private readonly contentDistributionService: ContentDistributionService,
   ) {}
 
   async execute(
@@ -59,10 +64,13 @@ export class CreateTvShowEpisodeUseCase {
     ]);
 
     episode.video = video;
-    content.tvShow.episodes = [episode];
+    return await runInTransaction(async () => {
+      await this.contentRepository.saveTvShow(content);
 
-    await this.contentRepository.saveTvShow(content);
-
-    return episode;
+      const savedEpisode = await this.episodeRepository.save(episode);
+      //If it fails the transaction is rolled back
+      await this.contentDistributionService.distributeContent(content.id);
+      return savedEpisode;
+    });
   }
 }

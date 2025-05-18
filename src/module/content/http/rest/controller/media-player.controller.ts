@@ -1,5 +1,5 @@
-import { GetStreamingURLUseCase } from '@contentModule/application/use-case/get-streaming-url.use-case';
 import { VideoNotFoundException } from '@contentModule/core/exception/video-not-found.exception';
+import { GetStreamingURLUseCase } from '@contentModule/core/use-case/get-streaming-url.use-case';
 import {
   Controller,
   Get,
@@ -9,6 +9,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
+
 import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';

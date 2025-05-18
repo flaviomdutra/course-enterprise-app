@@ -1,4 +1,4 @@
-import { CreateMovieUseCase } from '@contentModule/application/use-case/create-movie.use-case';
+import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
 import { CreateVideoResponseDto } from '@contentModule/http/rest/dto/response/create-video-response.dto';
 import { RestResponseInterceptor } from '@contentModule/http/rest/interceptor/rest-response.interceptor';
 import {
