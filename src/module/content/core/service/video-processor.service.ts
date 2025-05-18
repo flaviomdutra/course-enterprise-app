@@ -1,9 +1,9 @@
+import { VideoAgeRecommendationAdapter } from '@contentModule/core/adapter/video-recommendation.adapter.interface';
+import { VideoSummaryGenerationAdapter } from '@contentModule/core/adapter/video-summary-generator.adapter.interface';
+import { VideoTranscriptGenerationAdapter } from '@contentModule/core/adapter/video-transcript-generator.adapter.interface';
 import { VideoMetadata } from '@contentModule/persistence/entity/video-metadata.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { Video } from '@src/module/content/persistence/entity/video.entity';
-import { VideoAgeRecommendationAdapter } from '../adapter/video-recommendation.adapter.interface';
-import { VideoSummaryGenerationAdapter } from '../adapter/video-summary-generator.adapter.interface';
-import { VideoTranscriptGenerationAdapter } from '../adapter/video-transcript-generator.adapter.interface';
 
 @Injectable()
 export class VideoProcessorService {

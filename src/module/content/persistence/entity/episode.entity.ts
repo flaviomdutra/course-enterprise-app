@@ -1,8 +1,8 @@
-import { DefaultEntity } from '@sharedModules/persistence/typeorm/entity/default.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { Thumbnail } from './thumbnail.entity';
 import { TvShow } from './tv-show.entity';
 import { Video } from './video.entity';
+import { DefaultEntity } from '@sharedModules/persistence/typeorm/entity/default.entity';
 
 @Entity('Episode')
 export class Episode extends DefaultEntity<Episode> {

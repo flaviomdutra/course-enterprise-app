@@ -23,7 +23,7 @@ export class EpisodeLifecycleService {
 
     const lastEpisode =
       await this.episodeRepository.findByLastEpisodeByTvShowAndSeason(
-        episode.tvShow.contentId,
+        episode.tvShow.id,
         episode.season,
       );
     if (lastEpisode && lastEpisode.number + 1 !== episode.number) {

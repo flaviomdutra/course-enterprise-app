@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@sharedModules/config/service/config.service';
 import { HttpClient } from '@sharedModules/http-client/client/http.client';
 import { BillingApiUserSubscriptionActiveResponseDto } from '@sharedModules/integration/http/dto/response/billing-api-subscription-status-response.dto';
+
 import { BillingSubscriptionStatusApi } from '@sharedModules/integration/interface/billing-integration.interface';
 
 @Injectable()

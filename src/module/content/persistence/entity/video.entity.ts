@@ -1,8 +1,8 @@
+import { VideoMetadata } from '@contentModule/persistence/entity/video-metadata.entity';
 import { DefaultEntity } from '@sharedModules/persistence/typeorm/entity/default.entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Episode } from './episode.entity';
 import { Movie } from './movie.entity';
-import { VideoMetadata } from './video-metadata.entity';
 
 @Entity({ name: 'Video' })
 export class Video extends DefaultEntity<Video> {

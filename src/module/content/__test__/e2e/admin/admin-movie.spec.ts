@@ -1,7 +1,8 @@
-import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/constants';
-import { ContentModule } from '@contentModule/content.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
+
+import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/constants';
+import { ContentModule } from '@contentModule/content.module';
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';

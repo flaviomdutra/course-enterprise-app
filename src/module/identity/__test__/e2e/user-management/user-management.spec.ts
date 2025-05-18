@@ -1,10 +1,10 @@
-import { IdentityModule } from '@identityModule/identity.module';
 import { INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
-import { Tables } from '@testInfra/enum/table.enum';
-import { testDbClient } from '@testInfra/knex.database';
-import { createNestApp } from '@testInfra/test-e2e.setup';
 import request from 'supertest';
+import { IdentityModule } from '@identityModule/identity.module';
+import { createNestApp } from '@testInfra/test-e2e.setup';
+import { testDbClient } from '@testInfra/knex.database';
+import { Tables } from '@testInfra/enum/table.enum';
 
 describe('UserResolver (e2e)', () => {
   let app: INestApplication;

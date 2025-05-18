@@ -1,3 +1,4 @@
+import { DefaultEntity } from '@sharedModules/persistence/typeorm/entity/default.entity';
 import {
   EntityManager,
   EntityTarget,
@@ -5,7 +6,6 @@ import {
   FindOptionsWhere,
   Repository,
 } from 'typeorm';
-import { DefaultEntity } from '../entity/default.entity';
 
 export abstract class DefaultTypeOrmRepository<T extends DefaultEntity<T>> {
   private repository: Repository<T>;
@@ -32,6 +32,10 @@ export abstract class DefaultTypeOrmRepository<T extends DefaultEntity<T>> {
   }
 
   async find(options: FindOneOptions<T>): Promise<T | null> {
+    return this.repository.findOne(options);
+  }
+
+  async findOne(options: FindOneOptions<T>): Promise<T | null> {
     return this.repository.findOne(options);
   }
 

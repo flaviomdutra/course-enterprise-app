@@ -15,7 +15,6 @@ export const movieDbSchema = z.object({
   apiToken: z.string(),
   url: z.string(),
 });
-
 const billingApiSchema = z.object({
   url: z.string(),
 });
