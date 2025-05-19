@@ -8,7 +8,8 @@ import { User } from './type/user.type';
 
 @Resolver()
 export class UserResolver {
-  constructor(private readonly userManagementService: UserManagementService,
+  constructor(
+    private readonly userManagementService: UserManagementService,
     private readonly clsService: ClsService,
   ) {}
   @Mutation(() => User)
@@ -21,8 +22,7 @@ export class UserResolver {
 
   @Query(() => User)
   @UseGuards(AuthGuard)
-  async getProfile(
-  ): Promise<User> {
+  async getProfile(): Promise<User> {
     const userId = this.clsService.get('userId');
     const user = await this.userManagementService.getUserById(userId);
 

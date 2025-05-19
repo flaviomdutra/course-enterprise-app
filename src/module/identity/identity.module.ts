@@ -1,6 +1,4 @@
-import {
-  AuthService
-} from '@identityModule/core/service/authentication.service';
+import { AuthService } from '@identityModule/core/service/authentication.service';
 import { IdentityPersistenceModule } from '@identityModule/persistence/identity-persistence.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -22,7 +20,7 @@ import { UserRepository } from './persistence/repository/user.repository';
       driver: ApolloDriver,
     }),
     DomainModuleIntegrationModule,
-    AuthModule
+    AuthModule,
   ],
   providers: [
     {
