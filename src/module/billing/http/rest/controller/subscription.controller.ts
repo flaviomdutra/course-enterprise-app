@@ -2,7 +2,8 @@ import { SubscriptionService } from '@billingModule/core/service/subscription.se
 import { CreateSubscriptionRequestDto } from '@billingModule/http/rest/dto/request/create-subscription.dto';
 import { SubscriptionResponseDto } from '@billingModule/http/rest/dto/response/subscription-response.dto';
 import { UserSubscriptionActiveResponseDto } from '@billingModule/http/rest/dto/response/user-subscription-active-response.dto';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@sharedModules/auth/guard/auth.guard';
 import { plainToInstance } from 'class-transformer';
 
 @Controller('subscription')
@@ -26,6 +27,7 @@ export class SubscriptionController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Get('/user/:userId/active')
   async isUserSubscriptionActive(
     userId: string,

@@ -1,4 +1,3 @@
-import { jwtConstants } from '@identityModule/core/service/authentication.service';
 import {
   CanActivate,
   ContextType,
@@ -10,6 +9,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { ClsService } from 'nestjs-cls';
+import { jwtConstants } from '../auth.module';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
