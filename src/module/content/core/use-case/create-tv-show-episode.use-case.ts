@@ -20,7 +20,7 @@ export class CreateTvShowEpisodeUseCase {
     private readonly videoProcessorService: VideoProcessorService,
     private readonly episodeRepository: EpisodeRepository,
     private readonly contentDistributionService: ContentDistributionService,
-    private readonly logger: AppLogger
+    private readonly logger: AppLogger,
   ) {}
 
   async execute(
@@ -74,14 +74,14 @@ export class CreateTvShowEpisodeUseCase {
         //If it fails the transaction is rolled back
         await this.contentDistributionService.distributeContent(content.id);
 
-         this.logger.log(
+        this.logger.log(
           `Episode ${savedEpisode.title} with id ${savedEpisode.id} created`,
           {
             content,
             savedEpisode,
           },
         );
-        
+
         return savedEpisode;
       },
       {

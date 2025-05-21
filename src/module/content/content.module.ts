@@ -30,7 +30,7 @@ import { LoggerModule } from '@sharedModules/logger/logger.module';
     ConfigModule.forRoot(),
     HttpClientModule,
     AuthModule,
-    LoggerModule
+    LoggerModule,
   ],
   controllers: [
     AdminMovieController,
