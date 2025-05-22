@@ -8,6 +8,7 @@ import { ConfigService } from '@sharedModules/config/service/config.service';
 import { TypeOrmPersistenceModule } from '@sharedModules/persistence/typeorm/typeorm-persistence.module';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
+import { VideoMetadataRepository } from './repository/video-metadata.repository';
 
 @Module({
   imports: [
@@ -29,7 +30,17 @@ import { addTransactionalDataSource } from 'typeorm-transactional';
       },
     }),
   ],
-  providers: [ContentRepository, EpisodeRepository, VideoRepository],
-  exports: [ContentRepository, EpisodeRepository, VideoRepository],
+  providers: [
+    ContentRepository,
+    EpisodeRepository,
+    VideoRepository,
+    VideoMetadataRepository,
+  ],
+  exports: [
+    ContentRepository,
+    EpisodeRepository,
+    VideoRepository,
+    VideoMetadataRepository,
+  ],
 })
 export class ContentPersistenceModule {}

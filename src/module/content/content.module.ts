@@ -25,6 +25,14 @@ import { ConfigModule } from '@sharedModules/config/config.module';
 import { ConfigService } from '@sharedModules/config/service/config.service';
 import { HttpClientModule } from '@sharedModules/http-client/http-client.module';
 import { LoggerModule } from '@sharedModules/logger/logger.module';
+import { ContentAgeRecommendationService } from './core/service/content-age-recommendation.service';
+import { GenerateSummaryForVideoUseCase } from './core/use-case/generate-summary-for-video.use-case';
+import { SetAgeRecommendationUseCase } from './core/use-case/set-age-recommendation.use-case';
+import { TranscribeVideoUseCase } from './core/use-case/transcribe-video.use-case';
+import { VideoAgeRecommendationConsumer } from './queue/consumer/video-age-recommendation.queue-consumer';
+import { VideoSummaryConsumer } from './queue/consumer/video-summary.queue-consumer';
+import { VideoTranscriptionConsumer } from './queue/consumer/video-transcription.queue-consumer';
+import { VideoProcessingJobProducer } from './queue/producer/video-processing-job.queue-producer';
 import { QUEUES } from './queue/queue.constant';
 
 @Module({
@@ -95,6 +103,14 @@ import { QUEUES } from './queue/queue.constant';
     CreateTvShowUseCase,
     GetStreamingURLUseCase,
     ContentDistributionService,
+    VideoSummaryConsumer,
+    VideoAgeRecommendationConsumer,
+    VideoTranscriptionConsumer,
+    VideoProcessingJobProducer,
+    SetAgeRecommendationUseCase,
+    GenerateSummaryForVideoUseCase,
+    TranscribeVideoUseCase,
+    ContentAgeRecommendationService,
   ],
 })
 export class ContentModule {}
