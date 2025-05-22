@@ -18,11 +18,14 @@ import { MediaPlayerController } from '@contentModule/http/rest/controller/media
 import { ContentPersistenceModule } from '@contentModule/persistence/content-persistence.module';
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
 import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { AuthModule } from '@sharedModules/auth/auth.module';
 import { ConfigModule } from '@sharedModules/config/config.module';
+import { ConfigService } from '@sharedModules/config/service/config.service';
 import { HttpClientModule } from '@sharedModules/http-client/http-client.module';
 import { LoggerModule } from '@sharedModules/logger/logger.module';
+import { QUEUES } from './queue/queue.constant';
 
 @Module({
   imports: [
@@ -31,6 +34,36 @@ import { LoggerModule } from '@sharedModules/logger/logger.module';
     HttpClientModule,
     AuthModule,
     LoggerModule,
+    BullModule.forRootAsync({
+      imports: [ConfigModule.forRoot()],
+      useFactory: async (configService: ConfigService) => ({
+        connection: {
+          host: configService.get('redis.host'),
+          port: configService.get('redis.port'),
+        },
+        defaultJobOptions: {
+          attempts: 3,
+          backoff: {
+            type: 'exponential',
+            delay: 1000,
+          },
+          removeOnComplete: true,
+          removeOnFail: false,
+        },
+      }),
+      inject: [ConfigService],
+    }),
+    BullModule.registerQueue(
+      {
+        name: QUEUES.VIDEO_AGE_RECOMMENDATION,
+      },
+      {
+        name: QUEUES.VIDEO_SUMMARY,
+      },
+      {
+        name: QUEUES.VIDEO_TRANSCRIPT,
+      },
+    ),
   ],
   controllers: [
     AdminMovieController,
