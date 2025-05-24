@@ -25,7 +25,6 @@ export class UserResolver {
   async getProfile(): Promise<User> {
     const userId = this.clsService.get('userId');
     const user = await this.userManagementService.getUserById(userId);
-
     if (!user) {
       throw new UnauthorizedException('User not found');
     }

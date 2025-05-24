@@ -1,5 +1,5 @@
 {
-  "name": "course-enterprise-app",
+  "name": "recording",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -19,17 +19,16 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest.e2e.ts --runInBand",
-    "content:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/module/content/persistence/migration/migration -d src/module/content/persistence/typeorm-datasource.ts",
-    "content:db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/module/content/persistence/typeorm-datasource.ts",
-    "content:db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d src/module/content/persistence/typeorm-datasource.ts",
+    "content:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/module/content/shared/persistence/migration/migration -d src/module/content/shared/persistence/typeorm-datasource.ts",
+    "content:db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/module/content/shared/persistence/typeorm-datasource.ts",
+    "content:db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d src/module/content/shared/persistence/typeorm-datasource.ts",
     "billing:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/module/billing/persistence/migration/migration -d src/module/billing/persistence/typeorm-datasource.ts",
     "billing:db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/module/billing/persistence/typeorm-datasource.ts",
     "billing:db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d src/module/billing/persistence/typeorm-datasource.ts",
     "identity:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/module/identity/persistence/migration/migration -d src/module/identity/persistence/typeorm-datasource.ts",
     "identity:db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/module/identity/persistence/typeorm-datasource.ts",
     "identity:db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d src/module/identity/persistence/typeorm-datasource.ts",
-    "db:migrate:all": "yarn content:db:migrate && yarn billing:db:migrate && yarn identity:db:migrate",
-    "prepare": "husky"
+    "db:migrate:all": "yarn content:db:migrate && yarn billing:db:migrate && yarn identity:db:migrate"
   },
   "dependencies": {
     "@apollo/server": "^4.10.5",
@@ -46,7 +45,7 @@
     "@nestjs/typeorm": "^10.0.2",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
-    "bullmq": "^5.53.0",
+    "bullmq": "^5.52.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "graphql": "^16.9.0",

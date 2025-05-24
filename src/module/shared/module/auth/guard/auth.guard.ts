@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from '@sharedModules/auth/auth.module';
 import { Request } from 'express';
 import { ClsService } from 'nestjs-cls';
-import { jwtConstants } from '../auth.module';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,7 +28,6 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
-
       this.clsService.set('userId', payload.sub);
       this.clsService.set('userToken', token);
     } catch {

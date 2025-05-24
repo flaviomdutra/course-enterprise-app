@@ -4,8 +4,8 @@ import { initializeTransactionalContext } from 'typeorm-transactional';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const logger = LoggerFactory('application-main');
   initializeTransactionalContext();
+  const logger = LoggerFactory('application-main');
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
